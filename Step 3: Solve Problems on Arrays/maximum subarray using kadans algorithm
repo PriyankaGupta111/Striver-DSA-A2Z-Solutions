@@ -1,0 +1,16 @@
+class Solution {
+    public int maxSubArray(int[] nums) {
+        int maxSum = nums[0]; // अधिकतम योग को पहले तत्व से आरंभ करें
+        int currentSum = 0;
+
+        for (int num : nums) {
+            if (currentSum < 0) {
+                currentSum = 0; // यदि वर्तमान योग ऋणात्मक हो जाए, तो नया सबएरे शुरू करें
+            }
+            currentSum += num;
+            maxSum = Math.max(maxSum, currentSum);
+        }
+        
+        return maxSum;
+    }
+}
