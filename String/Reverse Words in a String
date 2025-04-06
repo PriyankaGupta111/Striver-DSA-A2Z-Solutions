@@ -1,0 +1,19 @@
+class Solution {
+    public String reverseWords(String s) {
+        String[] words = s.split("\\s+");
+          // Step 3: StringBuilder में reverse order में जोड़ो words
+        StringBuilder result = new StringBuilder();
+
+        for (int i = words.length - 1; i >= 0; i--) {
+            result.append(words[i]);
+
+            // अगर आखिरी word नहीं है तो space add करो
+           
+                result.append(" ");
+            
+        }
+
+        // Step 4: Final string return करो
+        return result.toString().trim();
+    }
+}
