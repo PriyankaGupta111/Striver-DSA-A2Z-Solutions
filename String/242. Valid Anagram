@@ -1,0 +1,38 @@
+public class Solution {
+    public boolean isAnagram(String s, String t) {
+        // अगर lengths ही बराबर नहीं हैं तो anagram नहीं हो सकता
+        if (s.length() != t.length()) {
+            return false;
+        }
+
+        // 26 characters के लिए count array
+        int[] count = new int[26];
+
+        // पहली string के लिए character count बढ़ाओ
+        for (char ch : s.toCharArray()) {
+            count[ch - 'a']++;
+        }
+
+        // दूसरी string के लिए character count घटाओ
+        for (char ch : t.toCharArray()) {
+            count[ch - 'a']--;
+        }
+
+        // अगर सभी counts 0 हैं तो anagram है
+        for (int val : count) {
+            if (val != 0) {
+                return false;
+            }
+        }
+
+        return true; // सभी characters बराबर थे
+    }
+
+    // Testing method
+    public static void main(String[] args) {
+        Solution sol = new Solution();
+
+        System.out.println(sol.isAnagram("anagram", "nagaram")); // true
+        System.out.println(sol.isAnagram("rat", "car"));         // false
+    }
+}
