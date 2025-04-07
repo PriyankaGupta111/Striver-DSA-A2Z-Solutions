@@ -1,0 +1,28 @@
+class Solution {
+    public boolean isIsomorphic(String s, String t) {
+        
+     Map<Character,Character> map = new HashMap<>();
+        for(int i=0;i<s.length();i++){
+            char x = s.charAt(i);
+            char y = t.charAt(i);
+            if(map.containsKey(x)){
+                if(!map.get(x).equals(y))return false;
+
+            }
+            /*if x is a new key and y is already map to oher key
+            a → c ✔️
+            b → c ❌ */
+
+            else if(map.containsValue(y))return false;
+
+            else{
+
+          
+            map.put(x,y);
+            }
+
+        }
+        return true;
+    }
+
+}
