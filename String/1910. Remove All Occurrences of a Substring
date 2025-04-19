@@ -1,0 +1,11 @@
+class Solution {
+    public String removeOccurrences(String s, String part) {
+        // Jab tak 's' mein 'part' string maujood hai
+        while(s.contains(part)) {
+            // 'part' ka sabse pehla occurrence hata do
+            s = s.replaceFirst(part, "");
+        }
+        // Jab 'part' string pura remove ho jaye, final 's' return karo
+        return s;
+    }
+}
