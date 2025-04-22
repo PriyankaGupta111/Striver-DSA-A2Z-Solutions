@@ -1,0 +1,20 @@
+class Solution {
+    public int minAddToMakeValid(String s) {
+         int open = 0;       // unmatched '(' count
+        int insertions = 0; // number of insertions needed
+
+        for (char ch : s.toCharArray()) {
+            if (ch == '(') {
+                open++; // increase count of open brackets
+            } else { // ch == ')'
+                if (open > 0) {
+                    open--; // match with an open bracket
+                } else {
+                    insertions++; // no open bracket to match, insert one
+                }
+            }
+        }
+
+        return insertions + open;
+    }
+}
