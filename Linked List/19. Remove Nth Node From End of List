@@ -1,0 +1,29 @@
+ 
+class Solution {
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        
+        ListNode first = head;
+        ListNode second = head;
+
+        // Move first pointer n+1 steps ahead
+        for (int i = 1; i <= n; i++) {
+            first = first.next;
+        }
+        if(first==null){
+            head=head.next;
+            return head;
+        }
+
+        // Move both pointers
+        while (first.next != null) {
+             second = second.next;
+            first = first.next;
+           
+        }
+
+        // Remove the nth node
+        second.next = second.next.next;
+
+        return head;
+    }
+}
