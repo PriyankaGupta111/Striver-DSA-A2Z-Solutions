@@ -1,0 +1,42 @@
+class Solution {
+    public long subArrayRanges(int[] nums) {
+        int n = nums.length;
+        long maxSum = 0;
+        long minSum = 0;
+
+        // 1️⃣ Calculate contribution of each element as MAX
+        Stack<Integer> stack = new Stack<>();
+
+        for (int i = 0; i <= n; i++) {
+            // For right boundary: use a dummy max at end
+            while (!stack.isEmpty() && (i == n || nums[stack.peek()] < nums[i])) {
+                int mid = stack.pop();
+                int left = stack.isEmpty() ? -1 : stack.peek();
+                int right = i;
+
+                long count = (mid - left) * (long)(right - mid);
+                maxSum += nums[mid] * count;
+            }
+            stack.push(i);
+        }
+
+        // 2️⃣ Calculate contribution of each element as MIN
+        stack.clear();  // Reuse the same stack
+
+        for (int i = 0; i <= n; i++) {
+            // For right boundary: use a dummy min at end
+            while (!stack.isEmpty() && (i == n || nums[stack.peek()] > nums[i])) {
+                int mid = stack.pop();
+                int left = stack.isEmpty() ? -1 : stack.peek();
+                int right = i;
+
+                long count = (mid - left) * (long)(right - mid);
+                minSum += nums[mid] * count;
+            }
+            stack.push(i);
+        }
+
+        // Final result: maxSum - minSum
+        return maxSum - minSum;
+    }
+}
