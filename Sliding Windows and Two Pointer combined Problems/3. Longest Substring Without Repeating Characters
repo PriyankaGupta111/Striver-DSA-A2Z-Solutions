@@ -1,0 +1,67 @@
+Solution 1:- using Hashmap
+
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+          Map<Character, Integer> map = new HashMap<>();
+        int i = 0, j = 0;
+        int maxLen = 0;
+
+        while (j < s.length()) {
+            char c = s.charAt(j);
+            map.put(c, map.getOrDefault(c, 0) + 1);
+
+  // Valid window with all unique characters
+            if (map.size() == j - i + 1) {
+                maxLen = Math.max(maxLen, j - i + 1);
+                 j++;
+            }
+
+               // Window size greater than map size → duplicate exists
+           else {
+                while (map.size() < j - i + 1) {
+                    char leftChar = s.charAt(i);
+                    map.put(leftChar, map.get(leftChar) - 1);
+                    if (map.get(leftChar) == 0) {
+                        map.remove(leftChar);
+                    }
+                    i++;
+                }
+                j++;
+            }
+
+        }
+
+        return maxLen;
+}
+}
+
+
+Solution 2:- using Hashset
+
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+
+
+         int i = 0, j = 0, maxLen = 0;
+        Set<Character> set = new HashSet<>();
+
+        while (j < s.length()) {
+            char c = s.charAt(j);
+
+            // If character not in set, add and update max length
+            if (!set.contains(c)) {
+                set.add(c);
+                maxLen = Math.max(maxLen, j - i + 1);
+                j++;
+            } 
+            // If duplicate found, remove characters from start
+            else {
+                set.remove(s.charAt(i));
+                i++;
+              
+            }
+        }
+
+        return maxLen;
+    }
+}
