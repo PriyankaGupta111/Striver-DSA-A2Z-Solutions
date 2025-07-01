@@ -1,0 +1,39 @@
+class Solution {
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        if (nums == null || k <= 0) return new int[0];
+        
+        int n = nums.length;
+        int[] result = new int[n - k + 1];
+        
+        
+        int i = 0, j = 0;
+        Deque<Integer> dq = new LinkedList<>();
+     
+        int z=0;
+        while (j < n) {
+            // Remove all smaller elements from the back of deque
+            while (!dq.isEmpty() && nums[dq.peekLast()] < nums[j]) {
+                dq.pollLast();
+            }
+
+            dq.addLast(j);
+
+           
+            if (j - i + 1 == k) {
+                // Window size is k, so take the front (maximum)
+               result[z++] = (nums[dq.peekFirst()]);
+
+                // If the front is going out of window, remove it
+                if (dq.peekFirst() == i) {
+                    dq.pollFirst();
+                }
+
+                i++; // Slide the window
+               
+            }
+            j++;
+        }
+
+        return result;
+    }
+}
