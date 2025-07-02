@@ -1,0 +1,53 @@
+class Solution {
+    public int numberOfSubarrays(int[] nums, int k) {
+       
+        return atMost(nums, k) - atMost(nums, k - 1);
+    }
+
+    // Counts subarrays with at most k odd numbers
+    private int atMost(int[] nums, int k) {
+        int i = 0, j = 0, count = 0, oddCount = 0;
+
+        while (j < nums.length) {
+            if (nums[j] % 2 == 1) {
+                oddCount++;
+            }
+
+            while (oddCount > k) {
+                if (nums[i] % 2 == 1) {
+                    oddCount--;
+                }
+                i++;
+            }
+
+            count += j - i + 1;
+            j++;
+        }
+
+        return count;
+    }
+}
+
+Solution:-2
+
+//     class Solution {
+//     public int numberOfSubarrays(int[] nums, int k) {
+//         Map<Integer, Integer> map = new HashMap<>();
+//         map.put(0, 1);  // For exactly k odd from start
+//         int count = 0, oddCount = 0;
+
+//         for (int num : nums) {
+//             if (num % 2 != 0) {
+//                 oddCount++;  // Count current odd
+//             }
+
+//             // If we have seen (oddCount - k) before, those are valid subarrays
+//             count += map.getOrDefault(oddCount - k, 0);
+
+//             // Save the current oddCount in map
+//             map.put(oddCount, map.getOrDefault(oddCount, 0) + 1);
+//         }
+
+//         return count;
+//     }
+// }
