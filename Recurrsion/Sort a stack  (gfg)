@@ -1,0 +1,25 @@
+/*Complete the function below*/
+class GfG {
+    public Stack<Integer> sort(Stack<Integer> s) {
+        // add code here.
+     if(!s.isEmpty() ){
+           
+       
+        int top = s.pop();
+       sort(s);
+       insetatbottom(s,top);
+     }
+        return s;
+    }
+    
+    private static void insetatbottom(Stack<Integer> s ,int data){
+        if(s.isEmpty() || s.peek()<=data){
+            s.push(data);
+            return;
+            
+        }
+        int top= s.pop();
+        insetatbottom(s,data);
+        s.push(top);
+    }
+}
