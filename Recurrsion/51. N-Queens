@@ -1,0 +1,63 @@
+class Solution {
+    public List<List<String>> solveNQueens(int n) {
+            List<List<String>> result = new ArrayList<>();
+        char[][] board = new char[n][n];
+
+        // Initialize board with dots
+        for (int i = 0; i < n; i++) {
+            Arrays.fill(board[i], '.');
+        }
+
+        // Use sets to track column and diagonal threats
+        Set<Integer> cols = new HashSet<>();
+        Set<Integer> diagonals = new HashSet<>();
+        Set<Integer> antiDiagonals = new HashSet<>();
+
+        // Start backtracking from row 0
+        backtrack(0, board, cols, diagonals, antiDiagonals, result);
+        return result;
+    }
+
+    private void backtrack(int row, char[][] board,
+                           Set<Integer> cols, Set<Integer> diagonals, Set<Integer> antiDiagonals,
+                           List<List<String>> result) {
+        int n = board.length;
+
+        // Base case: All rows filled → solution found
+        if (row == n) {
+            List<String> solution = new ArrayList<>();
+            for (char[] r : board) {
+                solution.add(new String(r));
+            }
+            result.add(solution);
+            return;
+        }
+
+        // Try placing queen in every column of current row
+        for (int col = 0; col < n; col++) {
+            int diag = row - col;
+            int antiDiag = row + col;
+
+            if (cols.contains(col) || diagonals.contains(diag) || antiDiagonals.contains(antiDiag)) {
+                continue; // Not safe
+            }
+
+            // Place queen
+            board[row][col] = 'Q';
+            cols.add(col);
+            diagonals.add(diag);
+            antiDiagonals.add(antiDiag);
+
+            // Recurse to next row
+            backtrack(row + 1, board, cols, diagonals, antiDiagonals, result);
+
+            // Backtrack: remove queen
+            board[row][col] = '.';
+            cols.remove(col);
+            diagonals.remove(diag);
+            antiDiagonals.remove(antiDiag);
+        }
+    }
+}
+
+    
