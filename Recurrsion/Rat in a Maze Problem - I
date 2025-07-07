@@ -1,0 +1,40 @@
+class Solution {
+    // Function to find all possible paths
+    
+    public ArrayList<String> ratInMaze(int[][] maze) {
+      int n = maze.length;
+        ArrayList<String> res = new ArrayList<>();
+
+        if (maze[0][0] == 0 || maze[n - 1][n - 1] == 0)
+            return res;
+
+        solve(maze, 0, 0, n, "", res);
+        Collections.sort(res);  // Ensure final lexicographic order
+        return res;
+    }
+
+    public static void solve(int[][] mat, int i, int j, int n, String path, ArrayList<String> res) {
+        // Dead ends
+        if (i < 0 || i >= n || j < 0 || j >= n || mat[i][j] != 1) {
+            return;
+        }
+
+        // Base case
+        if (i == n - 1 && j == n - 1) {
+            res.add(path);
+            return;
+        }
+
+        // Mark as visited
+        mat[i][j] = 0;
+
+        // Explore in lexicographically sorted order: D, L, R, U
+        solve(mat, i + 1, j, n, path + "D", res); // Down
+        solve(mat, i, j - 1, n, path + "L", res); // Left
+        solve(mat, i, j + 1, n, path + "R", res); // Right
+        solve(mat, i - 1, j, n, path + "U", res); // Up
+
+        // Unmark (Backtrack)
+        mat[i][j] = 1;
+    }
+}
