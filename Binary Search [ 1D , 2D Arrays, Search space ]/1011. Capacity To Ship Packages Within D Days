@@ -1,0 +1,55 @@
+
+
+class Solution {
+    public int shipWithinDays(int[] weights, int days) {
+         int low = getMax(weights);         // Minimum capacity possible
+        int high = getSum(weights);        // Maximum capacity possible
+
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+
+            if (canShip(weights, days, mid)) {
+                high = mid - 1;  // Try for smaller capacity
+            } else {
+                low = mid + 1;   // Increase capacity
+            }
+        }
+
+        return low;  // Final minimum capacity
+    }
+
+    // Returns true if we can ship in 'days' with 'capacity'
+    private boolean canShip(int[] weights, int days, int capacity) {
+        int currentLoad = 0;
+        int requiredDays = 1;
+
+        for (int w : weights) {
+            if (currentLoad + w > capacity) {
+                requiredDays++;
+                currentLoad = 0;
+            }
+            currentLoad += w;
+        }
+
+        return requiredDays <= days;
+    }
+
+    // Max value in weights[]
+    private int getMax(int[] weights) {
+        int max = 0;
+        for (int w : weights) {
+            max = Math.max(max, w);
+        }
+        return max;
+    }
+
+    // Total sum of weights[]
+    private int getSum(int[] weights) {
+        int sum = 0;
+        for (int w : weights) {
+            sum += w;
+        }
+        return sum;
+    }
+}
+    
