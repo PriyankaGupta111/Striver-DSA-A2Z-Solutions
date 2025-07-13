@@ -1,0 +1,37 @@
+// User function Template for Java
+
+class Solution {
+    public int kthElement(int a[], int b[], int k) {
+        // code here
+                if (a.length > b.length)
+            return kthElement(b, a, k); // Ensure nums1 is the smaller array
+
+        int m = a.length;
+        int n = b.length;
+
+        int low = Math.max(0, k - n);
+        int high = Math.min(k, m);
+
+        while (low <= high) {
+            int Px = low + (high - low) / 2;
+            int Py = k - Px;
+
+            int x1 = (Px == 0) ? Integer.MIN_VALUE : a[Px - 1];
+            int x3 = (Px == m) ? Integer.MAX_VALUE : a[Px];
+
+            int x2 = (Py == 0) ? Integer.MIN_VALUE : b[Py - 1];
+            int x4 = (Py == n) ? Integer.MAX_VALUE : b[Py];
+
+            if (x1 <= x4 && x2 <= x3) {
+                return Math.max(x1, x2);
+            } else if (x1 > x4) {
+                high = Px - 1;
+            } else {
+                low = Px + 1;
+            }
+        }
+
+        return -1; // This line should never be reached
+    }
+}
+    
