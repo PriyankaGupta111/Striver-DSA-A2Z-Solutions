@@ -1,0 +1,31 @@
+class Solution {
+    public int splitArray(int[] nums, int k) {
+        
+        int low=Arrays.stream(nums).max().getAsInt();
+        int high=Arrays.stream(nums).sum();
+        int result=high;
+        while(low<=high){
+            int mid=low+(high-low)/2;
+            if(canPossible(nums,k,mid)){
+                result=mid;
+                high=mid-1;
+            }
+            else{
+                low=mid+1;
+            }
+        }
+        return result;
+    }
+    private boolean canPossible(int[] nums, int k, int maxsum){
+        int subarrays=1;
+        int currentsum=0;
+        for(int num:nums){
+            currentsum+=num;
+            if(currentsum>maxsum){
+                subarrays++;
+                currentsum=num;
+            }
+        }
+        return subarrays<=k;
+    }
+}
