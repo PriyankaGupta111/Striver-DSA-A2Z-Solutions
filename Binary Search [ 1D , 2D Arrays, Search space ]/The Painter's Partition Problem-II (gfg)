@@ -1,0 +1,36 @@
+// User function Template for Java
+
+class Solution {
+    public int minTime(int[] arr, int k) {
+        // code here
+         int low=Arrays.stream(arr).max().getAsInt();
+        int high=Arrays.stream(arr).sum();
+        int result=high;
+        while(low<=high){
+            int mid=low+(high-low)/2;
+            if(canPossible(arr,k,mid)){
+                result=mid;
+                high=mid-1;
+            }
+            else{
+                low=mid+1;
+            }
+        }
+        return result;
+    }
+    private boolean canPossible(int[] nums, int k, int maxtime){
+        int painter=1;
+        int currentsum=0;
+        for(int num:nums){
+            currentsum+=num;
+            if(currentsum>maxtime){
+                painter++;
+                currentsum=num;
+            }
+        }
+        return painter<=k;
+    }
+}
+
+    
+
