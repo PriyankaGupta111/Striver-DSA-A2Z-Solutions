@@ -1,0 +1,36 @@
+class Solution {
+    public List<Integer> largestDivisibleSubset(int[] nums) {
+         Arrays.sort(nums);
+        // Code here
+         int n = nums.length;
+        int[] dp = new int[n];           // dp[i] = length of LIS ending at i
+        int[] parent = new int[n];       // parent[i] = index of previous element in LIS
+        Arrays.fill(dp, 1);
+        Arrays.fill(parent, -1);
+
+        int maxLen = 1, lastIndex = 0;
+
+        for (int i = 1; i < n; i++) {
+            for (int j = 0; j < i; j++) {
+                if (nums[i] % nums[j]==0 && dp[j] + 1 > dp[i]) {
+                    dp[i] = dp[j] + 1;
+                    parent[i] = j;
+                }
+            }
+            if (dp[i] > maxLen) {
+                maxLen = dp[i];
+                lastIndex = i;
+            }
+        }
+
+        // Reconstruct the LIS sequence
+        LinkedList<Integer> lis = new LinkedList<>();
+        while (lastIndex != -1) {
+            lis.addFirst(nums[lastIndex]);
+            lastIndex = parent[lastIndex];
+        }
+
+       return new ArrayList<>(lis);
+
+    }
+}
